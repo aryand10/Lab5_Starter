@@ -6,9 +6,11 @@ function init() {
   const hornSelect = document.getElementById('horn-select');
   const hornImage = document.querySelector('img');
   const audio = document.querySelector('audio');
+  const volumeInput = document.getElementById('volume');
+  const volumeIcon = document.querySelector('#volume-controls img');
 
   hornSelect.addEventListener('change', function() {
-    // Update the image based on the selected horn
+    // Update the image and audio source based on the selected horn
     switch (hornSelect.value) {
       case 'air-horn':
         hornImage.src = 'assets/images/air-horn.svg';
@@ -23,5 +25,22 @@ function init() {
         audio.src = 'assets/audio/party-horn.mp3';
         break;
     }
+  });
+
+  volumeInput.addEventListener('input', function() {
+    // Update the volume icon based on the slider value
+    const volume = volumeInput.value;
+    if (volume == 0) {
+      volumeIcon.src = 'assets/icons/volume-level-0.svg';
+    } else if (volume < 33) {
+      volumeIcon.src = 'assets/icons/volume-level-1.svg';
+    } else if (volume < 67) {
+      volumeIcon.src = 'assets/icons/volume-level-2.svg';
+    } else {
+      volumeIcon.src = 'assets/icons/volume-level-3.svg';
+    }
+
+    // Update the volume of the audio element
+    audio.volume = volume / 100;
   });
 }
