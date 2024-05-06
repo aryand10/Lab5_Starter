@@ -8,9 +8,10 @@ function init() {
   const audio = document.querySelector('audio');
   const volumeInput = document.getElementById('volume');
   const volumeIcon = document.querySelector('#volume-controls img');
+  const playButton = document.querySelector('button');
+  const jsConfetti = new JSConfetti();
 
   hornSelect.addEventListener('change', function() {
-    // Update the image and audio source based on the selected horn
     switch (hornSelect.value) {
       case 'air-horn':
         hornImage.src = 'assets/images/air-horn.svg';
@@ -28,7 +29,6 @@ function init() {
   });
 
   volumeInput.addEventListener('input', function() {
-    // Update the volume icon based on the slider value
     const volume = volumeInput.value;
     if (volume == 0) {
       volumeIcon.src = 'assets/icons/volume-level-0.svg';
@@ -39,8 +39,16 @@ function init() {
     } else {
       volumeIcon.src = 'assets/icons/volume-level-3.svg';
     }
-
-    // Update the volume of the audio element
     audio.volume = volume / 100;
+  });
+
+  playButton.addEventListener('click', function() {
+    audio.play();
+    if (hornSelect.value === 'party-horn') {
+      jsConfetti.addConfetti({
+        confettiRadius: 6,
+        confettiNumber: 500,
+      });
+    }
   });
 }
